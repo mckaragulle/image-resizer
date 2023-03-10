@@ -1,0 +1,23 @@
+{
+  "name": "karagulle/image-resizer",
+  "description": "description",
+  "keywords": [
+    "laravel",
+    "laravel image resizer",
+    "laravel php resizer"
+
+  ],
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "mustafakaragulle",
+      "email": "mustafacelalettinkaragulle@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1.15",
+    "intervention/image": "^2.4",
+    "intervention/imagecache": "^2.3"
+  }
+}
