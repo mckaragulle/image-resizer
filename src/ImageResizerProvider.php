@@ -23,6 +23,6 @@ class ImageResizerProvider extends ServiceProvider
    */
   public function register()
   {
-    $this->app->singleton(ImageResizerInterface::class, ImageResizer::class);
+    $this->app->bind(ImageResizerInterface::class, ImageResizer::class);
   }
 }
