@@ -1,6 +1,6 @@
 <?php
 
-namespace Karagulle\Facades\ImageResizer;
+namespace Karagulle\ImageResizer\Facades\ImageResizer;
 
 use Illuminate\Support\Facades\Facade;
 
