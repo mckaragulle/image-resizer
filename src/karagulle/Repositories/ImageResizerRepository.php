@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repos\Providers;
+namespace Karagulle\Repositories;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

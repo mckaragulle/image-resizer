@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace Karagulle\Providers;
 
-use App\Repositories\ImageResizerRepository;
-use App\Repositories\Interfaces\ImageResizerInterface;
 use Illuminate\Support\ServiceProvider;
+use Karagulle\Repositories\ImageResizerRepository;
+use Karagulle\Repositories\Interfaces\ImageResizerInterface;
 
 class ImageResizerProvider extends ServiceProvider
 {

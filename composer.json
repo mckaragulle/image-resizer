@@ -5,13 +5,12 @@
     "laravel",
     "laravel image resizer",
     "laravel php resizer"
-
   ],
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
     {
-      "name": "mustafakaragulle",
+      "name": "Mustafa KARAGÜLLE",
       "email": "mustafacelalettinkaragulle@gmail.com"
     }
   ],
@@ -19,5 +18,20 @@
     "php": "^8.1.15",
     "intervention/image": "^2.4",
     "intervention/imagecache": "^2.3"
+  },
+  "autoload":{
+    "psr-4": {
+      "Karagulle\\ImageResizer\\":"src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Karagulle\\Providers\\ImageResizerProvider"
+      ],
+      "aliases": {
+        "ImageResizer": "Karagulle\\Repositories\\Interfaces\\ImageResizerFacade"
+      }
+    }
   }
 }
