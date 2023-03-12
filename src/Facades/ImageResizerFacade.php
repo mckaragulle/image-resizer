@@ -12,6 +12,6 @@ class ImageResizerFacade extends Facade
    */
   protected static function getFacadeAccessor()
   {
-    return 'image-resizer';
+    return 'Karagulle\ImageResizer\ImageResizerInterface';
   }
 }
