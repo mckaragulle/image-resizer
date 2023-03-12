@@ -26,9 +26,6 @@
   },
   "extra": {
     "laravel": {
-      "providers": [
-        "Karagulle\\Providers\\ImageResizerProvider"
-      ],
       "aliases": {
         "ImageResizer": "Karagulle\\Repositories\\Interfaces\\ImageResizerFacade"
       }
