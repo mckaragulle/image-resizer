@@ -4,7 +4,7 @@ namespace Karagulle\ImageResizer;
 
 use Illuminate\Support\ServiceProvider;
 use Karagulle\ImageResizer\ImageResizerInterface;
-use Karagulle\ImageResizer\ImageResizerRepository;
+use Karagulle\ImageResizer\ImageResizer;
 
 class ImageResizerProvider extends ServiceProvider
 {
@@ -23,6 +23,6 @@ class ImageResizerProvider extends ServiceProvider
    */
   public function register()
   {
-    $this->app->singleton(ImageResizerInterface::class, ImageResizerRepository::class);
+    $this->app->singleton(ImageResizerInterface::class, ImageResizer::class);
   }
 }

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 
-class ImageResizerRepository
+class ImageResizer
 {
   /**
    * The cache path name of photo files
