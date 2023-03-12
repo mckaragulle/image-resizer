@@ -1,6 +1,6 @@
 <?php
 
-namespace Karagulle\Repositories;
+namespace Karagulle\ImageResizer;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Karagulle\Repositories\Interfaces;
+namespace Karagulle\ImageResizer;
 
 interface ImageResizerInterface
 {

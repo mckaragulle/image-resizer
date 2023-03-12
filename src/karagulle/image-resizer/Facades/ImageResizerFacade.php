@@ -1,6 +1,6 @@
 <?php
 
-namespace Karagulle\Repositories\Interfaces;
+namespace Karagulle\Karagulle\Facades\ImageResizer;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -12,6 +12,6 @@ class ImageResizerFacade extends Facade
    */
   protected static function getFacadeAccessor()
   {
-    return 'App\Repositories\Interfaces\ImageResizerInterface';
+    return 'Karagulle\ImageResizer\ImageResizerInterface';
   }
 }
