@@ -79,8 +79,7 @@ class ImageResizer
     }
     try {
       return ($found == false ? $this->resizer($this->originalPath) : $found);
-    }
-    catch (\Exception $e){
+    } catch (\Exception $e) {
       \Log::error(":::HATA:::{$e->getLine()} : {$e->getMessage()}");
       return $this->getDefault($width, $height);
     }
@@ -98,12 +97,11 @@ class ImageResizer
     $this->height = $height;
     $path = $this->cachePath . $this->width . '_' . $this->height;
 
-    if (!Storage::exists($path)){
+    if (!Storage::exists($path)) {
       Storage::makeDirectory($path);
       $this->writePath = $path . '/' . $this->defaultImg;
       return $this->resizer();
-    }
-    else {
+    } else {
       $this->writePath = $this->cachePath . $this->width . '_' . $this->height . '/' . $this->defaultImg;
       $this->resizer('public/original/mountain.jpeg');
       return asset(Storage::url($this->writePath));
@@ -155,9 +153,9 @@ class ImageResizer
    */
   protected function resizer($inputFile = null)
   {
-    $inputFile = Storage::get(is_null($inputFile)?$this->originalPath:$inputFile);
+    $inputFile = Storage::get(is_null($inputFile) ? $this->originalPath : $inputFile);
 
-    $img=Image::make($inputFile)
+    Image::make($inputFile)
       ->resize($this->width, $this->height, function ($constraint) {
         $constraint->aspectRatio();
         $constraint->upsize();
