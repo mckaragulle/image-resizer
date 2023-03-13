@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Image;
+use Image;
 
 class ImageResizer
 {
@@ -51,6 +51,12 @@ class ImageResizer
   protected $filename;
 
   /**
+   * Return new filetype
+   * @var string
+   */
+  protected $filetype = "webp";
+
+  /**
    * Return resized photo file
    *
    * @param string $filename File Name
@@ -59,20 +65,25 @@ class ImageResizer
    *
    * @return bool|string
    */
-  public function open(string $filename, int $width = 300, int $height = 300): bool|string
+  public function open(string $filename, int $width = 300, int $height = 300, $filetype = "webp"): bool|string
   {
-    $this->filename = $filename;
-
+    $this->originalPath = "public/original/{$filename}";
+    $f = explode(".", $filename);
+    $this->filename = $f[0];
     $this->width = $width;
     $this->height = $height;
+    $this->filetype = $filetype;
 
     if ($found = $this->checkCache()) {
       return $found;
     }
-
-    $this->originalPath = 'public/original/' . $this->filename;/*dosya var mi kontrol et yoksa, resim yuklenemez; resize edilemez*/
-    $found = $this->checkCache();
-    return ($found == false ? $this->resizer() : $found);
+    try {
+      return ($found == false ? $this->resizer($this->originalPath) : $found);
+    }
+    catch (\Exception $e){
+      \Log::error(":::HATA:::{$e->getLine()} : {$e->getMessage()}");
+      return $this->getDefault($width, $height);
+    }
   }
 
   /**
@@ -87,15 +98,16 @@ class ImageResizer
     $this->height = $height;
     $path = $this->cachePath . $this->width . '_' . $this->height;
 
-    if (!Storage::exists($path)):
+    if (!Storage::exists($path)){
       Storage::makeDirectory($path);
       $this->writePath = $path . '/' . $this->defaultImg;
       return $this->resizer();
-    else:
+    }
+    else {
       $this->writePath = $this->cachePath . $this->width . '_' . $this->height . '/' . $this->defaultImg;
-      $this->resizer($this->defaultType($type));
+      $this->resizer('public/original/mountain.jpeg');
       return asset(Storage::url($this->writePath));
-    endif;
+    }
   }
 
   /**
@@ -108,7 +120,7 @@ class ImageResizer
    */
   public function getOriginal(string $filename): string
   {
-    return asset(Storage::url('public/original/' . $filename));
+    return asset(Storage::url("public/original/{$filename}"));
   }
 
   /**
@@ -127,52 +139,31 @@ class ImageResizer
    */
   protected function checkCache(): bool|string
   {
-    $path = $this->cachePath . $this->width . '_' . $this->height;
-    $this->writePath = $path . '/' . $this->filename;
+    $path = "{$this->cachePath}{$this->width}_{$this->height}";
+    $this->writePath = "{$path}/{$this->filename}.{$this->filetype}";
     if (!Storage::exists($path)) {
       Storage::makeDirectory($path);
       return false;
     }
-
-    try {
-      return (Storage::exists($this->writePath) ? asset(Storage::url($this->writePath)) : false);
-    } catch (\Exception $e) {
-      \Log::error("An error occurred while checking the file: {$e->getMessage()}");
-      return false;
-    }
+    return (Storage::exists($this->writePath) ? asset(Storage::url($this->writePath)) : false);
   }
 
   /**
    * @param null $inputFile
-   * @param bool $logo Fotoğrafa logo basmak istenirse true, yoksa false girilmelidir.
    *
    * @return string
    */
-  protected function resizer($inputFile = null, $logo = true)
+  protected function resizer($inputFile = null)
   {
-    if (is_null($inputFile)) {
-      try {
-        $img = Image::make(Storage::get($this->originalPath));
-        if ($logo)
-          $img = $img->insert(public_path('images/logo.png'), 'bottom-right', 0, 0);
-        $img = $img->orientate();
-      } catch (\Exception $e) {
-        Log::error("An error occurred while resizing the image: {$e->getMessage()}");
-        return $this->getDefault($this->width, $this->height);
-      }
-    } else {
-      $img = Image::make($inputFile)->orientate();
-    }
+    $inputFile = Storage::get(is_null($inputFile)?$this->originalPath:$inputFile);
 
-    $img->resize($this->width, $this->height, function ($constraint) {
-      $constraint->aspectRatio();
-      $constraint->upsize();
-    });
-    $img->save(Storage::path($this->writePath));
-
-    $cnv = Image::canvas($this->width, $this->height, '#ffffff');
-    $cnv->insert(Storage::path($this->writePath), "center");
-    $cnv->save(Storage::path($this->writePath));
+    $img=Image::make($inputFile)
+      ->resize($this->width, $this->height, function ($constraint) {
+        $constraint->aspectRatio();
+        $constraint->upsize();
+      })
+      ->encode('webp', 100)
+      ->save(Storage::path($this->writePath), 100);
 
     return asset(Storage::url($this->writePath));
   }
