@@ -23,7 +23,7 @@ Bu paket ile image intervention paketi üzerinden storage klasöründe bulunan f
 
 - Yada composer.json dosyasınıza aşağıdaki satırı ekleyin.
 ```json
-"karagulle/image-resizer": "^0.1.13"
+"karagulle/image-resizer": "^0.1.14"
 ```
 
 - Ardından bağımlıkları yükleyin.
