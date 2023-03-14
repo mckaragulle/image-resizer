@@ -11,6 +11,6 @@ return [
 
   'cachePath' => 'public/cache_',
   'originalPath' => 'public/original',
-  'defaultImg' => 'mountain.jpeg',
+  'defaultImg' => 'default.png',
 
 ];
