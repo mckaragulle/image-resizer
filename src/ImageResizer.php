@@ -74,7 +74,6 @@ class ImageResizer
    */
   public function open(string $filename, int $width = 300, int $height = 300, $filetype = "webp"): bool|string
   {
-    $this->originalPath .= "/{$filename}";
     $f = explode(".", $filename);
     $this->filename = $f[0];
     $this->width = $width;
@@ -83,7 +82,7 @@ class ImageResizer
 
     try {
       $found = $this->checkCache();
-      return ($found == false ? $this->resizer($this->originalPath) : $found);
+      return ($found == false ? $this->resizer("{$this->originalPath}/{$filename}") : $found);
     } catch (\Exception $e) {
       \Log::error(":::HATA:::{$e->getLine()} : {$e->getMessage()}");
       return $this->getDefault($width, $height);
@@ -165,8 +164,8 @@ class ImageResizer
         $constraint->aspectRatio();
         $constraint->upsize();
       })
-      ->encode('webp', 100)
-      ->save(Storage::path($this->writePath), 100);
+      ->encode($this->filetype)
+      ->save(Storage::path($this->writePath), 80);
 
     return asset(Storage::url($this->writePath));
   }
