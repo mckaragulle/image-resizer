@@ -16,7 +16,7 @@ class ImageResizer
    * Ex: public/cache__100_100/
    * @var $writePath
    */
-  protected $cachePath = 'public/cache_';
+  protected $cachePath = config('image-resizer.cachePath');
 
   /**
    * The original path name of photo files
@@ -24,7 +24,7 @@ class ImageResizer
    * Ex: public/cache__100_100/
    * @var $writePath
    */
-  protected $originalPath = 'public/original';
+  protected $originalPath = config('image-resizer.originalPath');
 
   /**
    * Return default photo name when photo file is not found
@@ -32,7 +32,7 @@ class ImageResizer
    * Fotoğraf yoksa gönderilecek default.png dosyası
    * @var $defaultImg
    */
-  protected $defaultImg = 'default.png';
+  protected $defaultImg = config('image-resizer.defaultImg');
 
   /**
    * Return the full photo path and photo name
@@ -74,10 +74,8 @@ class ImageResizer
     $this->height = $height;
     $this->filetype = $filetype;
 
-    if ($found = $this->checkCache()) {
-      return $found;
-    }
     try {
+      $found = $this->checkCache();
       return ($found == false ? $this->resizer($this->originalPath) : $found);
     } catch (\Exception $e) {
       \Log::error(":::HATA:::{$e->getLine()} : {$e->getMessage()}");
@@ -103,7 +101,7 @@ class ImageResizer
       return $this->resizer();
     } else {
       $this->writePath = $this->cachePath . $this->width . '_' . $this->height . '/' . $this->defaultImg;
-      $this->resizer('public/original/mountain.jpeg');
+      $this->resizer("{$this->originalPath}/{$this->defaultImg}");
       return asset(Storage::url($this->writePath));
     }
   }
@@ -118,7 +116,7 @@ class ImageResizer
    */
   public function getOriginal(string $filename): string
   {
-    return asset(Storage::url("public/original/{$filename}"));
+    return asset(Storage::url("{$this->originalPath}/{$filename}"));
   }
 
   /**

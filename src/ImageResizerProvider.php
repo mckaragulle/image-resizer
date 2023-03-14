@@ -23,6 +23,9 @@ class ImageResizerProvider extends ServiceProvider
    */
   public function register()
   {
+    $this->publishes([
+      __DIR__.'/../config/config.php' => config_path('image-resizer.php'),
+    ]);
     $this->app->bind(ImageResizerInterface::class, ImageResizer::class);
   }
 }
