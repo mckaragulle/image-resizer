@@ -18,17 +18,17 @@ Bu paket ile image intervention paketi üzerinden storage klasöründe bulunan f
 
 - Terminal de aşağıdaki kodu çalıştırabilirsiniz.
 ```php
-> composer require karagulle/image-resizer
+composer require karagulle/image-resizer
 ```
 
 - Yada composer.json dosyasınıza aşağıdaki satırı ekleyin.
 ```json
-"karagulle/image-resizer": "^0.1.20"
+"karagulle/image-resizer": "^0.1.24"
 ```
 
 - Ardından bağımlıkları yükleyin.
 ```php
-> composer install
+composer install
 ```
 
 - config/app.php dosyasını açıp aşağıdaki satırı providers içerisine ekleyin.
@@ -43,12 +43,12 @@ Bu paket ile image intervention paketi üzerinden storage klasöründe bulunan f
 
 - config dosyasının oluşması için aşağıdaki kodu çalıştırın.
 ```php
-> php artisan vendor:publish --provider="Karagulle\ImageResizer\ImageResizerProvider" --tag="config"
+php artisan vendor:publish --provider="Karagulle\ImageResizer\ImageResizerProvider" --tag="config" --force
 ```
 
 - Paket kurulumu tamamlandı. Paketin Storage dizinine erişebilmesi için symbolik link oluşturmalısınız. Daha önce bu komutu çalıştırmışsanız bu adımı atlayabilirsiniz.
 ```php
-> php artisan storage:link
+php artisan storage:link
 ```
 
 ## Code Examples - Kod Örneği

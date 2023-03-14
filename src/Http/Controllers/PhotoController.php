@@ -21,7 +21,7 @@ class PhotoController extends BaseController
     else if(Storage::exists($original))
     {
       $img = new ImageResizer();
-      if($img->open($original, $request->width, $request->height, $request->ext) != false){
+      if($img->open($photo, $request->width, $request->height, $request->ext) != false){
         $image = $original;
       } else {
         $image = $default;
@@ -30,6 +30,6 @@ class PhotoController extends BaseController
     else{
       $image = $default;
     }
-    return $img = Image::make(Storage::get($image))->response();
+    return Image::make(Storage::get($image))->response();
   }
 }
