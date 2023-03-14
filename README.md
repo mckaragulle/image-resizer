@@ -23,7 +23,7 @@ composer require karagulle/image-resizer
 
 - Yada composer.json dosyasınıza aşağıdaki satırı ekleyin.
 ```json
-"karagulle/image-resizer": "^0.1.24"
+"karagulle/image-resizer": "^0.1"
 ```
 
 - Ardından bağımlıkları yükleyin.
