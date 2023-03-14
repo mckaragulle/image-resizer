@@ -3,8 +3,8 @@
 namespace Karagulle\ImageResizer;
 
 use Illuminate\Support\ServiceProvider;
-use Karagulle\ImageResizer\ImageResizerInterface;
 use Karagulle\ImageResizer\ImageResizer;
+use Karagulle\ImageResizer\ImageResizerInterface;
 
 class ImageResizerProvider extends ServiceProvider
 {
@@ -14,7 +14,9 @@ class ImageResizerProvider extends ServiceProvider
    */
   public function boot()
   {
-    //
+    $this->publishes([
+      __DIR__.'/../config/config.php' => config_path('image-resizer.php'),
+    ], 'config');
   }
 
   /**
@@ -23,9 +25,7 @@ class ImageResizerProvider extends ServiceProvider
    */
   public function register()
   {
-    $this->publishes([
-      __DIR__.'/../config/config.php' => config_path('image-resizer.php'),
-    ]);
+    $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'image-resizer');
     $this->app->bind(ImageResizerInterface::class, ImageResizer::class);
   }
 }
