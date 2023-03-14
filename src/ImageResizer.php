@@ -16,7 +16,7 @@ class ImageResizer
    * Ex: public/cache__100_100/
    * @var $writePath
    */
-  protected $cachePath = config('image-resizer.cachePath');
+  protected $cachePath;
 
   /**
    * The original path name of photo files
@@ -24,7 +24,7 @@ class ImageResizer
    * Ex: public/cache__100_100/
    * @var $writePath
    */
-  protected $originalPath = config('image-resizer.originalPath');
+  protected $originalPath;
 
   /**
    * Return default photo name when photo file is not found
@@ -32,7 +32,7 @@ class ImageResizer
    * Fotoğraf yoksa gönderilecek default.png dosyası
    * @var $defaultImg
    */
-  protected $defaultImg = config('image-resizer.defaultImg');
+  protected $defaultImg;
 
   /**
    * Return the full photo path and photo name
@@ -56,6 +56,13 @@ class ImageResizer
    */
   protected $filetype = "webp";
 
+  public function __construct()
+  {
+    $this->cachePath = config('image-resizer.cachePath');
+    $this->originalPath = config('image-resizer.originalPath');
+    $this->defaultImg = config('image-resizer.defaultImg');
+  }
+
   /**
    * Return resized photo file
    *
@@ -67,7 +74,7 @@ class ImageResizer
    */
   public function open(string $filename, int $width = 300, int $height = 300, $filetype = "webp"): bool|string
   {
-    $this->originalPath = "public/original/{$filename}";
+    $this->originalPath .= "/{$filename}";
     $f = explode(".", $filename);
     $this->filename = $f[0];
     $this->width = $width;
